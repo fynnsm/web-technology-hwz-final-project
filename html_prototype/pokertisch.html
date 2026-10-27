@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scrum Poker – Pokertisch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navbar: auf beiden Seiten gleich aufgebaut -->
+  <header class="header">
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="nav__item nav__brand" href="index.html" aria-label="Scrum Poker – zur Startseite">
+        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="6" width="14" height="20" rx="3.5" fill="#9BB08A" transform="rotate(-14 12 16)"/><rect x="13" y="6" width="14" height="20" rx="3.5" fill="#F6C86B" stroke="#3B3F3A" stroke-width="2" transform="rotate(10 20 16)"/><path d="M20 12.6 23 16l-3 3.4-3-3.4Z" fill="#3B3F3A" transform="rotate(10 20 16)"/></svg>
+      </a>
+      <span class="nav__item nav__user">
+        <span class="avatar avatar--sm avatar--saffron">JK</span>
+        Janik
+      </span>
+      <a class="nav__pill" href="index.html" aria-label="Session verlassen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+        <span class="hide-sm">Verlassen</span>
+      </a>
+    </nav>
+  </header>
+
+  <main class="container table">
+
+    <section class="table__main">
+
+      <!-- Abstimmungsstatus (vor dem Aufdecken) -->
+      <div class="panel round">
+        <div class="round__progress">
+          <span class="round__count">4 von 5 haben abgestimmt</span>
+          <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-label="Abgegebene Stimmen">
+            <div class="progress__bar" style="width: 80%"></div>
+          </div>
+          <span class="label">Deckt automatisch auf, wenn alle abgestimmt haben</span>
+        </div>
+        <button class="btn btn--primary" type="button">Karten aufdecken</button>
+      </div>
+
+      <!-- Ergebnis nach dem Aufdecken (ersetzt den Block oben):
+      <div class="panel round">
+        <div class="stats">
+          <div class="stat"><span class="label">Durchschnitt</span><span class="stat__value">5.8</span></div>
+          <div class="stat"><span class="label">Spannweite</span><span class="stat__value">5–8</span></div>
+        </div>
+        <button class="btn btn--primary" type="button">Neue Runde</button>
+      </div>
+
+      Konsens: zusätzlich Klasse "round--consensus" und Text «Alle sind sich einig.»
+      -->
+
+      <section class="deck" aria-labelledby="deck-title">
+        <div class="deck__head">
+          <div class="deck__title">
+            <h1 id="deck-title">Deine Karte</h1>
+            <span class="label">Story Points</span>
+          </div>
+          <div class="segmented" role="group" aria-label="Schätzskala">
+            <button class="segmented__option" type="button" aria-pressed="true">Fibonacci</button>
+            <button class="segmented__option" type="button" aria-pressed="false">T-Shirt</button>
+          </div>
+        </div>
+
+        <div class="cards">
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="0 Punkte">0</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="1 Punkt">1</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="2 Punkte">2</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="3 Punkte">3</button>
+          <button class="poker-card" type="button" aria-pressed="true" aria-label="5 Punkte">5</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="8 Punkte">8</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="13 Punkte">13</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="21 Punkte">21</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="Unsicher">?</button>
+          <button class="poker-card" type="button" aria-pressed="false" aria-label="Pause">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>
+          </button>
+        </div>
+      </section>
+
+    </section>
+
+    <aside class="panel participants" aria-labelledby="participants-title">
+      <div class="participants__head">
+        <h2 id="participants-title">Teilnehmende</h2>
+        <span class="label">5 am Tisch</span>
+      </div>
+
+      <ul>
+        <li class="participant">
+          <span class="avatar avatar--saffron">JK</span>
+          <span class="participant__info">
+            <span class="participant__name">Janik (du)</span>
+            <span class="label">Abgestimmt</span>
+          </span>
+          <span class="vote vote--hidden" aria-label="Verdeckt abgestimmt">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A2D29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <span class="kick" aria-hidden="true"></span>
+        </li>
+
+        <li class="participant">
+          <span class="avatar">LM</span>
+          <span class="participant__info">
+            <span class="participant__name">Lea</span>
+            <span class="label">Abgestimmt</span>
+          </span>
+          <span class="vote vote--hidden" aria-label="Verdeckt abgestimmt">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A2D29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <button class="icon-btn kick" type="button" aria-label="Lea vom Tisch entfernen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </li>
+
+        <li class="participant">
+          <span class="avatar avatar--sage">MR</span>
+          <span class="participant__info">
+            <span class="participant__name">Marco</span>
+            <span class="label">Abgestimmt</span>
+          </span>
+          <span class="vote vote--hidden" aria-label="Verdeckt abgestimmt">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A2D29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <button class="icon-btn kick" type="button" aria-label="Marco vom Tisch entfernen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </li>
+
+        <li class="participant">
+          <span class="avatar">SK</span>
+          <span class="participant__info">
+            <span class="participant__name">Sara</span>
+            <span class="label">Abgestimmt</span>
+          </span>
+          <span class="vote vote--hidden" aria-label="Verdeckt abgestimmt">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A2D29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <button class="icon-btn kick" type="button" aria-label="Sara vom Tisch entfernen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </li>
+
+        <li class="participant">
+          <span class="avatar avatar--sage">NB</span>
+          <span class="participant__info">
+            <span class="participant__name">Nico</span>
+            <span class="label">Wartet</span>
+          </span>
+          <span class="vote vote--waiting" aria-label="Wartet">…</span>
+          <button class="icon-btn kick" type="button" aria-label="Nico vom Tisch entfernen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+  </main>
+
+</body>
+</html>
