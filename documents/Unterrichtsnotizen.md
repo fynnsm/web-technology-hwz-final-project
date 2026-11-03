@@ -20,3 +20,8 @@ Notizen aus dem Unterricht zum Modulprojekt (Scrum Poker).
 
 - Mit Hooks kann man sich in React "einklinken" (engl. *hook into*).
 - Damit nutzt man React-Funktionen wie State oder Lifecycle direkt in Funktionskomponenten, z. B. `useState`, `useEffect`.
+
+### Gross- und Kleinschreibung in JSX
+
+- Alles, was mit einem kleinen Buchstaben beginnt, sind HTML5-Elemente (z. B. `<div>`, `<button>`).
+- Alles, was wir gross schreiben, sind unsere eigenen React Components (z. B. `<Button>`).
