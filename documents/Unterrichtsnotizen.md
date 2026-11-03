@@ -25,3 +25,17 @@ Notizen aus dem Unterricht zum Modulprojekt (Scrum Poker).
 
 - Alles, was mit einem kleinen Buchstaben beginnt, sind HTML5-Elemente (z. B. `<div>`, `<button>`).
 - Alles, was wir gross schreiben, sind unsere eigenen React Components (z. B. `<Button>`).
+
+### useState
+
+```tsx
+const [text, setText] = useState('')
+```
+
+- `useState` gibt der Komponente ein Gedächtnis für einen Wert.
+- `''` ist der Startwert.
+- `text` ist der aktuelle Wert, `setText` ändert ihn.
+- Nach `setText(...)` zeichnet React die Komponente neu. Mit einer normalen Variable (`let text = ''`) passiert das nicht.
+- Wert nie direkt ändern (`text = 'xyz'`), immer über `setText`.
+- Man kann `useState` mehrmals verwenden, einmal pro Wert (z. B. `name`, `email`).
+- Der Wert kann alles sein: Text (`''`), Zahl (`0`), Ja/Nein (`false`), Liste (`[]`).
