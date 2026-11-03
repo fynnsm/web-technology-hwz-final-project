@@ -18,7 +18,7 @@ Notizen aus dem Unterricht zum Modulprojekt (Scrum Poker).
 
 ### Hooks
 
-- Mit Hooks kann man sich in React "einklinken" (engl. *hook into*).
+- Mit Hooks kann man sich in React "einklinken" (engl. _hook into_).
 - Damit nutzt man React-Funktionen wie State oder Lifecycle direkt in Funktionskomponenten, z. B. `useState`, `useEffect`.
 
 ### Gross- und Kleinschreibung in JSX
@@ -29,7 +29,7 @@ Notizen aus dem Unterricht zum Modulprojekt (Scrum Poker).
 ### useState
 
 ```tsx
-const [text, setText] = useState('')
+const [text, setText] = useState("");
 ```
 
 - `useState` gibt der Komponente ein Gedächtnis für einen Wert.
@@ -59,21 +59,21 @@ const [text, setText] = useState('')
 
 ```tsx
 type ResultProps = {
-  value: number
-}
+  value: number;
+};
 
 const Result = ({ value }: ResultProps) => {
-  return <div className="result">Ergebnis: {value}</div>
-}
+  return <div className="result">Ergebnis: {value}</div>;
+};
 ```
 
 **Anzeigen und ändern:** Wert und Änderungsfunktion als Props mitgeben.
 
 ```tsx
 type NumberInputProps = {
-  value: string
-  onChange: (newValue: string) => void
-}
+  value: string;
+  onChange: (newValue: string) => void;
+};
 
 const NumberInput = ({ value, onChange }: NumberInputProps) => {
   return (
@@ -83,32 +83,34 @@ const NumberInput = ({ value, onChange }: NumberInputProps) => {
       value={value}
       onChange={(e) => onChange(e.target.value)}
     />
-  )
-}
+  );
+};
 ```
 
 **Verwenden in `App`:**
 
 ```tsx
 export const App = () => {
-  const [numberOne, setNumberOne] = useState('')
-  const [numberTwo, setNumberTwo] = useState('')
-  const [result, setResult] = useState(0)
+  const [numberOne, setNumberOne] = useState("");
+  const [numberTwo, setNumberTwo] = useState("");
+  const [result, setResult] = useState(0);
 
   const add = () => {
-    setResult(Number(numberOne) + Number(numberTwo))
-  }
+    setResult(Number(numberOne) + Number(numberTwo));
+  };
 
   return (
     <div className="calculator">
       <NumberInput value={numberOne} onChange={setNumberOne} />
       <span>+</span>
       <NumberInput value={numberTwo} onChange={setNumberTwo} />
-      <button className="add-button" onClick={add}>Add</button>
+      <button className="add-button" onClick={add}>
+        Add
+      </button>
       <Result value={result} />
     </div>
-  )
-}
+  );
+};
 ```
 
 ```
@@ -137,12 +139,12 @@ onNumberChange: ChangeEventHandler<HTMLInputElement>           // ✅ dasselbe, 
 `ChangeEventHandler<HTMLInputElement>` ist eine fertige Abkürzung von React für `(event: ChangeEvent<HTMLInputElement>) => void`.
 
 ```tsx
-import { type ChangeEvent, type ChangeEventHandler, useState } from 'react'
+import { type ChangeEvent, type ChangeEventHandler, useState } from "react";
 
 type NumberInputProps = {
-  value: string
-  onNumberChange: ChangeEventHandler<HTMLInputElement>
-}
+  value: string;
+  onNumberChange: ChangeEventHandler<HTMLInputElement>;
+};
 
 const NumberInput = ({ value, onNumberChange }: NumberInputProps) => {
   return (
@@ -152,15 +154,15 @@ const NumberInput = ({ value, onNumberChange }: NumberInputProps) => {
       value={value}
       onChange={onNumberChange}
     />
-  )
-}
+  );
+};
 
 // in App:
 const updateOne = (event: ChangeEvent<HTMLInputElement>) => {
-  setNumberOne(event.target.value)
-}
+  setNumberOne(event.target.value);
+};
 
-<NumberInput value={numberOne} onNumberChange={updateOne} />
+<NumberInput value={numberOne} onNumberChange={updateOne} />;
 ```
 
 - Prop bekommt **Text**: In `App` reicht `onChange={setNumberOne}`, und `App` muss nichts über `<input>` wissen.
