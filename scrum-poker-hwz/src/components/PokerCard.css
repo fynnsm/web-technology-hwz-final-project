@@ -1,0 +1,58 @@
+.poker-card {
+  width: 84px;
+  height: 120px;
+  padding: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(59, 63, 58, 0.1);
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgba(59, 63, 58, 0.05);
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 1.875rem;
+  font-weight: 500;
+  transition:
+    transform 0.38s var(--ease),
+    box-shadow 0.38s var(--ease),
+    background-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .poker-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(59, 63, 58, 0.12);
+  }
+}
+
+.poker-card:active {
+  transform: translateY(-2px) scale(0.96);
+  transition-duration: 0.1s;
+}
+
+.poker-card[aria-pressed='true'] {
+  background: var(--saffron);
+  border-color: var(--saffron);
+  transform: translateY(-10px);
+  box-shadow: 0 16px 32px rgba(246, 200, 107, 0.45);
+}
+
+@media (max-width: 600px) {
+  .poker-card {
+    width: 64px;
+    height: 92px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poker-card:hover,
+  .poker-card:active {
+    transform: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .poker-card {
+    border-color: var(--ink);
+  }
+}

@@ -1,0 +1,15 @@
+.progress {
+  width: 260px;
+  max-width: 100%;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--butter);
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--sage);
+  transition: width 0.4s var(--ease);
+}

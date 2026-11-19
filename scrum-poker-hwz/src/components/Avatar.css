@@ -1,0 +1,25 @@
+.avatar {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--butter);
+  color: var(--ink-strong);
+  display: grid;
+  place-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.avatar--sm {
+  width: 28px;
+  height: 28px;
+  font-size: 0.75rem;
+}
+
+.avatar--saffron {
+  background: var(--saffron);
+}
+.avatar--sage {
+  background: var(--sage-soft);
+}

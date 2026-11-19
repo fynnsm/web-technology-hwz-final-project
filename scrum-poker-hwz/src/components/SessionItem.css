@@ -1,0 +1,70 @@
+.session {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-block: 4px;
+  border-top: 1px solid rgba(59, 63, 58, 0.07);
+}
+
+.session__link {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background-color 0.12s ease;
+}
+
+@media (hover: hover) {
+  .session__link:hover {
+    background: var(--cream);
+  }
+}
+
+.session__link:active {
+  background: #f1eee6;
+}
+
+.session__tile {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 12px;
+  background: var(--butter);
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-strong);
+}
+
+.session__tile--shirt {
+  background: var(--sage-soft);
+}
+
+.session__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.session__id {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.session__count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  color: var(--muted);
+}

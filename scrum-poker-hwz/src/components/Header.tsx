@@ -1,3 +1,4 @@
+import { Avatar } from './Avatar.tsx'
 import './Header.css'
 
 export function Header() {
@@ -38,7 +39,7 @@ export function Header() {
           </svg>
         </a>
         <span className="nav__item nav__user">
-          <span className="avatar avatar--sm avatar--saffron">JK</span>
+          <Avatar initials="JK" color="saffron" small />
           Janik
         </span>
         <a

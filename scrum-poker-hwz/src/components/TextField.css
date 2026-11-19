@@ -1,0 +1,54 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field__label {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.field__input {
+  height: 52px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-size: 1.0625rem;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 4px rgba(246, 200, 107, 0.45);
+}
+
+/* Fehlerzustand: Klasse .field--error am .field setzen */
+.field__error {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--danger-text);
+}
+
+.field--error .field__input {
+  border-color: var(--danger);
+}
+.field--error .field__error {
+  display: flex;
+}
+.field--error .field__hint {
+  display: none;
+}
+
+@media (prefers-contrast: more) {
+  .field__input {
+    border-color: var(--ink);
+  }
+}
