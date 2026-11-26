@@ -1,0 +1,5 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "oxc"],
+  "ignorePatterns": ["scrum-poker-hwz", "html_prototype", "dist"]
+}
