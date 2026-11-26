@@ -1,0 +1,53 @@
+import { s as setupBaseEnvironment, r as runBaseTests } from '../chunks/base.DCg6Jh4N.js';
+import { w as workerInit } from '../chunks/init-threads.Bf1Frg9S.js';
+import 'node:vm';
+import '../chunks/spy.BO0hTE3G.js';
+import '../chunks/index.BSqmIH9v.js';
+import 'chai';
+import 'node:async_hooks';
+import '../chunks/coverage.9iqXE2gN.js';
+import '../chunks/coverage.jGCktcGP.js';
+import '../chunks/pathe.M-eThtNZ.zq3TM4NT.js';
+import '../chunks/rpc.CNYWPa97.js';
+import '../chunks/source-map.DPHGMWvM.js';
+import '../chunks/index.Or9psEGe.js';
+import '../chunks/tinyrainbow.Do8I1XRG.js';
+import '../chunks/index.CAmut2NG.js';
+import 'vite/module-runner';
+import '../chunks/utils.DYj33du9.js';
+import '../chunks/setup-common.kEGtNVHG.js';
+import '../chunks/plugins.BPruPOR8.js';
+import '../chunks/index.D5jWOaqm.js';
+import '../chunks/run.zBhXlcZQ.js';
+import '../chunks/display.Cj2h2zsY.js';
+import '../task-utils.js';
+import '../chunks/rawSnapshot.DvoRLRNr.js';
+import '../chunks/offset.Dy-5Fdfn.js';
+import 'tinybench';
+import 'expect-type';
+import '../chunks/init.dGO4K2C0.js';
+import 'node:fs';
+import 'node:module';
+import 'node:url';
+import '../chunks/index.C7Nn66Gy.js';
+import '../chunks/moduleSourceMap.Dp1WduWi.js';
+import 'node:buffer';
+import '../chunks/inspector.D6o1NPo1.js';
+import '../path.js';
+import 'node:path';
+import '../module-evaluator.js';
+import '../traces.js';
+import '@vitest/mocker';
+import '@vitest/mocker/redirect';
+import 'node:console';
+import '../chunks/module-dependencies._2Eei3FO.js';
+import 'node:perf_hooks';
+import 'node:timers';
+import 'node:timers/promises';
+import 'node:util';
+import 'node:worker_threads';
+
+workerInit({
+	runTests: runBaseTests,
+	setup: setupBaseEnvironment
+});
