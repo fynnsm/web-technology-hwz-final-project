@@ -50,3 +50,59 @@ final project for web dev project
 
   ---
 
+  Entwickeln und Testen
+
+  Tests
+
+  Für Tests ist Vitest eingerichtet. Testdateien enden auf .test.ts oder .spec.ts und liegen direkt neben dem Code, den
+  sie prüfen, zum Beispiel src/counter.test.ts neben src/counter.ts. Vitest findet diese Dateien automatisch, es ist
+  keine weitere Konfiguration nötig.
+
+  Die Testfunktionen describe, it und expect werden explizit aus vitest importiert:
+  
+  import { describe, it, expect } from 'vitest'
+
+  describe('example', () => {
+    it('adds numbers', () => {
+      expect(1 + 1).toBe(2)
+    })
+  })                                                                            
+
+  Aktuell enthält das Projekt noch keine Tests. Das Skript npm test ist mit der Option --passWithNoTests konfiguriert,
+  damit die CI auch ohne Testdateien erfolgreich durchläuft. Sobald Tests hinzukommen, werden sie bei jedem Push
+  automatisch ausgeführt.
+
+  Tests, die auf das DOM zugreifen, brauchen eine simulierte Browser-Umgebung. Dafür kann happy-dom oder jsdom als
+  Dev-Dependency installiert und in einer vitest.config.ts als environment eingetragen werden.
+
+  TypeScript-Regeln
+
+  Die tsconfig.json ist bewusst streng konfiguriert. Der Typecheck in der CI schlägt fehl, wenn eine dieser Regeln
+  verletzt wird:
+
+  - Ungenutzte Variablen und Parameter sind nicht erlaubt (noUnusedLocals, noUnusedParameters). Parameter, die bewusst
+    ungenutzt bleiben, bekommen einen Unterstrich als Präfix, etwa _event.
+  - Typ-Imports müssen als solche gekennzeichnet werden: import type { Foo } from './foo.ts' (verbatimModuleSyntax).
+  - Nur löschbare TypeScript-Syntax ist erlaubt (erasableSyntaxOnly). Das heisst keine enum, keine namespace und keine
+    Parameter-Properties im Konstruktor. Stattdessen werden Union-Types oder as const-Objekte verwendet.
+  - Kein Fallthrough in switch-Blöcken ohne break oder return (noFallthroughCasesInSwitch).
+  - Imports dürfen die Dateiendung .ts tragen (allowImportingTsExtensions).
+
+  Diese Regeln sorgen dafür, dass toter Code und mehrdeutige Konstrukte gar nicht erst ins Repository gelangen.
+
+  Lokaler Workflow
+
+  Vor jedem Push werden lokal dieselben Schritte ausgeführt wie in der CI:
+
+  npm run typecheck   # TypeScript-Compiler prüft den Code                      
+  npm test            # Vitest führt alle Tests aus
+  npm run build       # Produktions-Build wird erstellt
+
+  Oder in einem Befehl:
+  
+  npm run typecheck && npm test && npm run build
+                                                                                
+  Laufen diese drei Schritte lokal fehlerfrei durch, ist auch der CI-Lauf auf GitHub grün. Während der Entwicklung
+  startet npm run dev den Vite-Dev-Server mit Hot Module Replacement, sodass Änderungen sofort im Browser sichtbar sind.
+
+  ---
