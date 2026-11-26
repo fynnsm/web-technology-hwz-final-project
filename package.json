@@ -1,23 +1,37 @@
 {
-  "name": "web-technology-hwz-final-project",
+  "name": "scrum-poker-hwz",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc -b",
     "lint": "oxlint --deny-warnings",
+    "test": "vitest run --passWithNoTests",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router": "^8.5.1",
+    "react-router-dom": "^7.18.5"
+  },
   "devDependencies": {
-    "oxlint": "^1.95.0",
-    "prettier": "^3.10.1",
-    "typescript": "~7.0.2",
-    "vite": "^8.3.6",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.87.0",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.4",
     "vitest": "^5.1.2"
   }
 }

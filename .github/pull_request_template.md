@@ -4,7 +4,7 @@
 
 ## Wie wurde es getestet?
 
-<!-- Lokal ausgeführt: typecheck, lint, test, build? Manuell im Browser geprüft? -->
+<!-- Lokal ausgeführt: `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm build`? Manuell im Browser geprüft? -->
 
 ## Screenshot
 
@@ -12,7 +12,7 @@
 
 ## Checkliste
 
-- [ ] `npm run typecheck` läuft fehlerfrei
-- [ ] `npm run lint` läuft fehlerfrei
-- [ ] `npm run format:check` läuft fehlerfrei
-- [ ] `npm test` läuft fehlerfrei
+- [ ] `pnpm typecheck` läuft fehlerfrei
+- [ ] `pnpm lint` läuft fehlerfrei
+- [ ] `pnpm format:check` läuft fehlerfrei
+- [ ] `pnpm test` läuft fehlerfrei
