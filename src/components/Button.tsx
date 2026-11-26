@@ -8,12 +8,21 @@ type ButtonProps = {
   disabled?: boolean
 }
 
-export function Button({ children, block = false, onClick, disabled = false }: ButtonProps) {
+export function Button({
+  children,
+  block = false,
+  onClick,
+  disabled = false,
+}: ButtonProps) {
   const className = block ? 'btn btn--primary btn--block' : 'btn btn--primary'
 
-
   return (
-    <button className={className} type="button" onClick={onClick} disabled={disabled}>
+    <button
+      className={className}
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   )

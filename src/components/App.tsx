@@ -169,7 +169,11 @@ export function App() {
               </svg>
               {creating ? 'Wird erstellt …' : 'Neue Session erstellen'}
             </Button>
-            {createError && <p className="start__error" role="alert">{createError}</p>}
+            {createError && (
+              <p className="start__error" role="alert">
+                {createError}
+              </p>
+            )}
           </section>
 
           <section
