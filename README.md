@@ -3,106 +3,56 @@
 participants: Janik Kranner, Fynn Merki, Sandra Petkovic
 final project for web dev project
 
----
-                                                                                
-  Projekt-Setup
+  ---
 
-  Das Projekt basiert auf Vite mit TypeScript und wurde aus dem Kurs-Template aufgesetzt. Der Code liegt im
-  GitHub-Repository fynnsm/web-technology-hwz-final-project auf dem Branch main.
+  Qualitätssicherung und Abhängigkeiten
 
-  Projektstruktur
+  Das Projekt nutzt drei zusammenspielende Mechanismen von GitHub, damit nur funktionierender Code auf main landet und
+  die Abhängigkeiten aktuell bleiben.
+
+  CI-Pipeline
   
-  - src/ enthält den Anwendungscode, public/ statische Assets, index.html ist der Einstiegspunkt.
-  - package.json definiert die Skripte dev, build, preview, typecheck und test. 
-  - tsconfig.json konfiguriert den TypeScript-Compiler.
-  - package-lock.json fixiert die Abhängigkeitsversionen, damit npm ci lokal und in der CI identische Pakete
-    installiert.
+  In .github/workflows/ci.yaml ist eine GitHub-Actions-Pipeline definiert. Sie startet automatisch bei jedem Push auf
+  main und bei jedem Pull Request gegen main. Auf einem frischen Ubuntu-Runner mit Node 22 führt sie vier Schritte aus:
 
-  Versionskontrolle
-
-  Eine .gitignore sorgt dafür, dass generierte und lokale Dateien nicht im Repository landen. Ausgeschlossen sind unter
-  anderem node_modules, der Build-Ordner dist, Log-Dateien, Editor-Einstellungen und .DS_Store. Abhängigkeiten werden
-  nicht eingecheckt, sondern bei Bedarf mit npm install aus dem Lockfile wiederhergestellt.
-
-  Continuous Integration
-
-  Unter .github/workflows/ci.yaml ist eine GitHub-Actions-Pipeline definiert. Sie läuft bei jedem Push und jedem Pull
-  Request auf main und führt auf einem Ubuntu-Runner mit Node 22 folgende Schritte aus:
-
-  1. npm ci installiert die Abhängigkeiten aus dem Lockfile.
-  2. npm run typecheck prüft den Code mit dem TypeScript-Compiler.
-  3. npm test führt die Tests mit Vitest aus.
+  1. npm ci installiert die Abhängigkeiten exakt nach package-lock.json.
+  2. npm run typecheck prüft den gesamten Code mit dem TypeScript-Compiler.
+  3. npm test führt alle Vitest-Tests aus.
   4. npm run build erstellt den Produktions-Build.
 
-  Schlägt ein Schritt fehl, wird der Lauf rot markiert und ist im Tab "Actions" auf GitHub einsehbar. Der erste Lauf
-  nach dem Setup war erfolgreich.
+  Schlägt ein Schritt fehl, bricht der Lauf ab und der Commit wird auf GitHub rot markiert. Da der Runner bei jedem Lauf
+  neu aufgesetzt wird, ist das Ergebnis unabhängig vom lokalen Rechner und zeigt, ob der Code reproduzierbar baut.
+
+  Branch Protection
+
+  Der Branch main ist geschützt. Direkte Pushes sind nicht erlaubt, auch nicht für Administratoren. Änderungen laufen
+  über Feature-Branches und Pull Requests. GitHub gibt den Merge erst frei, wenn der CI-Job build-and-test erfolgreich
+  war und der Branch auf dem aktuellen Stand von main ist. Force-Pushes und das Löschen von main sind gesperrt.
+
+  Damit wird die CI vom reinen Hinweisgeber zur verbindlichen Schranke: Code, der nicht kompiliert, Tests bricht oder
+  nicht baut, kann technisch nicht auf main gelangen.
+
+  Der typische Ablauf für eine Änderung:
+
+  git switch -c feature/mein-thema
+  # Code schreiben und committen
+  git push -u origin feature/mein-thema
+  gh pr create --fill
+  # CI abwarten, dann mergen                                                    
+  gh pr merge --squash --delete-branch
 
   Dependabot
-
-  Über .github/dependabot.yml prüft Dependabot wöchentlich die npm-Abhängigkeiten und eröffnet bei verfügbaren Updates
-  automatisch Pull Requests. Da diese PRs ebenfalls die CI durchlaufen, ist sofort sichtbar, ob ein Update den Build
-  oder die Tests bricht.
-
-  Lokal starten
   
-  npm install
-  npm run dev                                                                   
+  Über .github/dependabot.yml überwacht Dependabot wöchentlich die npm-Abhängigkeiten des Projekts. Findet es eine
+  neuere Version, eröffnet es automatisch einen Pull Request mit dem Update und einer Zusammenfassung der Änderungen.
 
-  ---
+  Dependabot aktualisiert nichts eigenständig. Jeder Update-PR durchläuft dieselbe CI-Pipeline und dieselbe Branch
+  Protection wie manueller Code. Ein Update, das Typecheck, Tests oder Build bricht, bleibt im PR sichtbar hängen und
+  kann nicht gemergt werden. Updates, die durchlaufen, werden nach kurzer Prüfung manuell gemergt.
 
-  Entwickeln und Testen
+  Zusammenspiel
 
-  Tests
+  Die drei Mechanismen ergänzen sich: Die CI prüft, die Branch Protection erzwingt das Prüfergebnis, und Dependabot
+  speist regelmässig Updates in genau diesen Prüfprozess ein. Der Stand auf main ist dadurch zu jedem Zeitpunkt ein
+  Stand, der kompiliert, getestet ist und baut.
 
-  Für Tests ist Vitest eingerichtet. Testdateien enden auf .test.ts oder .spec.ts und liegen direkt neben dem Code, den
-  sie prüfen, zum Beispiel src/counter.test.ts neben src/counter.ts. Vitest findet diese Dateien automatisch, es ist
-  keine weitere Konfiguration nötig.
-
-  Die Testfunktionen describe, it und expect werden explizit aus vitest importiert:
-  
-  import { describe, it, expect } from 'vitest'
-
-  describe('example', () => {
-    it('adds numbers', () => {
-      expect(1 + 1).toBe(2)
-    })
-  })                                                                            
-
-  Aktuell enthält das Projekt noch keine Tests. Das Skript npm test ist mit der Option --passWithNoTests konfiguriert,
-  damit die CI auch ohne Testdateien erfolgreich durchläuft. Sobald Tests hinzukommen, werden sie bei jedem Push
-  automatisch ausgeführt.
-
-  Tests, die auf das DOM zugreifen, brauchen eine simulierte Browser-Umgebung. Dafür kann happy-dom oder jsdom als
-  Dev-Dependency installiert und in einer vitest.config.ts als environment eingetragen werden.
-
-  TypeScript-Regeln
-
-  Die tsconfig.json ist bewusst streng konfiguriert. Der Typecheck in der CI schlägt fehl, wenn eine dieser Regeln
-  verletzt wird:
-
-  - Ungenutzte Variablen und Parameter sind nicht erlaubt (noUnusedLocals, noUnusedParameters). Parameter, die bewusst
-    ungenutzt bleiben, bekommen einen Unterstrich als Präfix, etwa _event.
-  - Typ-Imports müssen als solche gekennzeichnet werden: import type { Foo } from './foo.ts' (verbatimModuleSyntax).
-  - Nur löschbare TypeScript-Syntax ist erlaubt (erasableSyntaxOnly). Das heisst keine enum, keine namespace und keine
-    Parameter-Properties im Konstruktor. Stattdessen werden Union-Types oder as const-Objekte verwendet.
-  - Kein Fallthrough in switch-Blöcken ohne break oder return (noFallthroughCasesInSwitch).
-  - Imports dürfen die Dateiendung .ts tragen (allowImportingTsExtensions).
-
-  Diese Regeln sorgen dafür, dass toter Code und mehrdeutige Konstrukte gar nicht erst ins Repository gelangen.
-
-  Lokaler Workflow
-
-  Vor jedem Push werden lokal dieselben Schritte ausgeführt wie in der CI:
-
-  npm run typecheck   # TypeScript-Compiler prüft den Code                      
-  npm test            # Vitest führt alle Tests aus
-  npm run build       # Produktions-Build wird erstellt
-
-  Oder in einem Befehl:
-  
-  npm run typecheck && npm test && npm run build
-                                                                                
-  Laufen diese drei Schritte lokal fehlerfrei durch, ist auch der CI-Lauf auf GitHub grün. Während der Entwicklung
-  startet npm run dev den Vite-Dev-Server mit Hot Module Replacement, sodass Änderungen sofort im Browser sichtbar sind.
-
-  ---
