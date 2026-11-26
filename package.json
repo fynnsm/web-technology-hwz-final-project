@@ -8,9 +8,14 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests",
+    "lint": "oxlint --deny-warnings",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "oxlint": "^1.95.0",
+    "prettier": "^3.10.1",
     "typescript": "~7.0.2",
     "vite": "^8.3.6",
     "vitest": "^5.1.2"
