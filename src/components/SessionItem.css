@@ -54,10 +54,12 @@
   gap: 3px;
 }
 
-.session__id {
-  font-family: var(--mono);
+.session__name {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .session__count {

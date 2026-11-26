@@ -1,33 +1,57 @@
+import type { MouseEvent } from 'react'
+import { Link } from 'react-router'
+import type { DeckId } from '../types/sessions.ts'
 import { IconButton } from './IconButton.tsx'
 import './SessionItem.css'
 
 type SessionItemProps = {
   id: string
-  scale: 'Fibonacci' | 'T-Shirt'
-  participants: number
+  name: string
+  deck: DeckId
+  participantCount: number
+  // Wird vor dem Navigieren aufgerufen; kann es mit preventDefault() verhindern
+  onJoin: (event: MouseEvent<HTMLAnchorElement>) => void
+  onDelete: () => void
 }
 
-export function SessionItem({ id, scale, participants }: SessionItemProps) {
+const DECK_LABELS: Record<DeckId, string> = {
+  fibonacci: 'Fibonacci',
+  tshirt: 'T-Shirt',
+}
+
+export function SessionItem({
+  id,
+  name,
+  deck,
+  participantCount,
+  onJoin,
+  onDelete,
+}: SessionItemProps) {
   const participantText =
-    participants === 1
+    participantCount === 1
       ? '1 Teilnehmende Person'
-      : `${participants} Teilnehmende`
+      : `${participantCount} Teilnehmende`
+  // Die volle ID (UUID) steht in der URL; in der Liste reicht der Anfang
+  const shortId = id.slice(0, 8)
 
   return (
     <li className="session">
-      <a
+      <Link
         className="session__link"
-        href="pokertisch.html"
-        aria-label={`Session ${id} beitreten, ${participantText}`}
+        to={`/sessions/${id}`}
+        onClick={onJoin}
+        aria-label={`Session ${name} beitreten, ${participantText}`}
       >
-        {scale === 'T-Shirt' ? (
+        {deck === 'tshirt' ? (
           <span className="session__tile session__tile--shirt">S·M</span>
         ) : (
           <span className="session__tile">1·2·3</span>
         )}
         <span className="session__info">
-          <span className="session__id">{id}</span>
-          <span className="label">{scale}</span>
+          <span className="session__name">{name}</span>
+          <span className="label">
+            {DECK_LABELS[deck]} · ID {shortId}
+          </span>
         </span>
         <span className="session__count">
           <svg
@@ -45,7 +69,7 @@ export function SessionItem({ id, scale, participants }: SessionItemProps) {
             <circle cx="9" cy="7" r="4" />
             <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
           </svg>
-          {participants}
+          {participantCount}
         </span>
         <svg
           width="18"
@@ -60,8 +84,8 @@ export function SessionItem({ id, scale, participants }: SessionItemProps) {
         >
           <path d="m9 18 6-6-6-6" />
         </svg>
-      </a>
-      <IconButton label={`Session ${id} löschen`}>
+      </Link>
+      <IconButton label={`Session ${name} löschen`} onClick={onDelete}>
         <svg
           width="18"
           height="18"

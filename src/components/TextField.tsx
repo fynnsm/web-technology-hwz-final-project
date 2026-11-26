@@ -6,8 +6,10 @@ type TextFieldProps = {
   hint: string
   error: string
   placeholder?: string
-  defaultValue?: string
   autoComplete?: string
+  value: string
+  onChange: (value: string) => void
+  invalid?: boolean
 }
 
 // Fehlerzustand: Klasse "field--error" am .field setzen
@@ -17,11 +19,13 @@ export function TextField({
   hint,
   error,
   placeholder,
-  defaultValue,
+  value,
+  onChange,
   autoComplete,
+  invalid,
 }: TextFieldProps) {
   return (
-    <div className="field">
+    <div className={`field ${invalid ? 'field--error' : ''}`}>
       <label className="field__label" htmlFor={id}>
         {label}
       </label>
@@ -30,7 +34,8 @@ export function TextField({
         id={id}
         name={id}
         type="text"
-        defaultValue={defaultValue}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         autoComplete={autoComplete}
         aria-describedby={`${id}-hint ${id}-error`}

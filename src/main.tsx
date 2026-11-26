@@ -4,14 +4,16 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { App } from './components/App.tsx'
 import { Table } from './components/Table.tsx'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { NotFound } from './components/NotFound.tsx'
+import { BrowserRouter, Routes, Route } from 'react-router'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/table" element={<Table />} />
+        <Route path="/sessions/:sessionId" element={<Table />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

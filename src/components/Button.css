@@ -39,6 +39,11 @@
   font-size: 1rem;
 }
 
+.btn:disabled {
+  opacity: 0.6;
+  pointer-events: not-allowed;
+}
+
 @media (hover: hover) {
   .btn:hover {
     opacity: 0.9;
