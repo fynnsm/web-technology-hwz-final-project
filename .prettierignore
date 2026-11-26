@@ -1,9 +1,5 @@
-# Build output and lockfile
+pnpm-lock.yaml
 dist
-package-lock.json
-
-# Separate sub-project with its own tooling
-scrum-poker-hwz
 
 # Prototype and notes, not part of the app
 html_prototype
