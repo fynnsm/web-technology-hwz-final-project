@@ -1,0 +1,121 @@
+# Example requests for all routes.
+# Needs the VS Code extension "REST Client" (humao.rest-client).
+# Run each one via "Send Request" right above the request.
+
+@baseUrl = http://localhost:3000/api
+
+# No need to copy IDs: REST Client remembers the responses of named requests
+# (# @name ...). Run "Create session" and "Join session" first; the requests
+# below then work automatically.
+@sessionId = {{createSession.response.body.id}}
+@participantId = {{joinSession.response.body.id}}
+
+### List all sessions (200)
+GET {{baseUrl}}/sessions
+
+### Create session (201)
+# @name createSession
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "name": "Sprint 12"
+}
+
+### Create session with an invalid name: whitespace only (400)
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "name": "   "
+}
+
+### Get one session (200, or 404 for a wrong ID)
+GET {{baseUrl}}/sessions/{{sessionId}}
+
+### Join session (201, 200 the second time with the same name)
+# @name joinSession
+POST {{baseUrl}}/sessions/{{sessionId}}/participants
+Content-Type: application/json
+
+{
+  "name": "Anna"
+}
+
+### Join with an invalid name: whitespace only (400)
+POST {{baseUrl}}/sessions/{{sessionId}}/participants
+Content-Type: application/json
+
+{
+  "name": "   "
+}
+
+### Join an unknown session (404)
+POST {{baseUrl}}/sessions/does-not-exist/participants
+Content-Type: application/json
+
+{
+  "name": "Anna"
+}
+
+### Pick a card (200)
+PUT {{baseUrl}}/sessions/{{sessionId}}/participants/{{participantId}}/vote
+Content-Type: application/json
+
+{
+  "vote": "5"
+}
+
+### Retract the card (200)
+PUT {{baseUrl}}/sessions/{{sessionId}}/participants/{{participantId}}/vote
+Content-Type: application/json
+
+{
+  "vote": null
+}
+
+### Card that is not in the deck (400)
+PUT {{baseUrl}}/sessions/{{sessionId}}/participants/{{participantId}}/vote
+Content-Type: application/json
+
+{
+  "vote": "M"
+}
+
+### Reveal (200)
+PUT {{baseUrl}}/sessions/{{sessionId}}/revealed
+Content-Type: application/json
+
+{
+  "revealed": true
+}
+
+### New round: clear votes, hide cards (200)
+PUT {{baseUrl}}/sessions/{{sessionId}}/revealed
+Content-Type: application/json
+
+{
+  "revealed": false
+}
+
+### Switch deck (200, starts a new round)
+PUT {{baseUrl}}/sessions/{{sessionId}}/deck
+Content-Type: application/json
+
+{
+  "deck": "tshirt"
+}
+
+### Unknown deck (400)
+PUT {{baseUrl}}/sessions/{{sessionId}}/deck
+Content-Type: application/json
+
+{
+  "deck": "farben"
+}
+
+### Leave session (204)
+DELETE {{baseUrl}}/sessions/{{sessionId}}/participants/{{participantId}}
+
+### Delete session (204)
+DELETE {{baseUrl}}/sessions/{{sessionId}}

@@ -64,6 +64,7 @@ a.nav__item:active {
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
+  border: 0;
   transition:
     transform 0.1s ease-out,
     background-color 0.15s ease;

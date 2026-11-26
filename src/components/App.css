@@ -86,6 +86,15 @@
   gap: 24px;
 }
 
+.start__error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--danger-text);
+}
+
 @media (max-width: 600px) {
   .home {
     padding-block: 32px 56px;

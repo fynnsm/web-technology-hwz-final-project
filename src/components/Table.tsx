@@ -5,11 +5,89 @@ import { SegmentedControl } from './SegmentedControl.tsx'
 import { PokerCard } from './PokerCard.tsx'
 import { Participant } from './Participant.tsx'
 import './Table.css'
+import { useEffect, useRef, useState } from 'react'
+import { Link, Navigate, useNavigate, useParams } from 'react-router'
+import { joinSession, leaveSession } from '../api/sessions.ts'
+import { NAME_KEY } from '../storage.ts'
 
 export function Table() {
+  const { sessionId } = useParams()
+  const navigate = useNavigate()
+  const [name] = useState(() => (localStorage.getItem(NAME_KEY) ?? '').trim())
+  const [joinFailed, setJoinFailed] = useState(false)
+  // Ref statt State: Die Cleanup-Funktion braucht den aktuellen Wert,
+  // und die ID ändert nichts an der Anzeige.
+  const participantIdRef = useRef<string | null>(null)
+
+  // Beim Betreten am Server anmelden, beim Unmount wieder abmelden.
+  useEffect(() => {
+    if (!sessionId || name === '') {
+      return
+    }
+    const id = sessionId
+    let ignore = false
+
+    async function join() {
+      try {
+        const participant = await joinSession(id, name)
+        if (!ignore) {
+          participantIdRef.current = participant.id
+        }
+      } catch {
+        if (!ignore) {
+          setJoinFailed(true)
+        }
+      }
+    }
+    void join()
+
+    return () => {
+      ignore = true
+      const participantId = participantIdRef.current
+      if (participantId) {
+        participantIdRef.current = null
+        void leaveSession(id, participantId).catch(() => {})
+      }
+    }
+  }, [sessionId, name])
+
+  async function handleLeave() {
+    const participantId = participantIdRef.current
+    if (sessionId && participantId) {
+      // Auf null setzen, damit die Cleanup-Funktion nicht nochmals abmeldet
+      participantIdRef.current = null
+      try {
+        await leaveSession(sessionId, participantId)
+      } catch {
+        // Verlassen soll auch klappen, wenn der Server nicht antwortet
+      }
+    }
+    navigate('/')
+  }
+
+  // Ohne Namen kann man nicht beitreten: zurück zur Namenseingabe
+  if (name === '') {
+    return <Navigate to="/" replace />
+  }
+
+  if (joinFailed) {
+    return (
+      <>
+        <Header userName={name} />
+        <main className="container">
+          <h1>Session nicht gefunden</h1>
+          <p>
+            Diese Session gibt es nicht (mehr), oder der Server antwortet nicht.
+          </p>
+          <Link to="/">Zurück zur Startseite</Link>
+        </main>
+      </>
+    )
+  }
+
   return (
     <>
-      <Header />
+      <Header userName={name} onLeave={handleLeave} />
       <main className="container table">
         <section className="table__main">
           {/* Abstimmungsstatus (vor dem Aufdecken) */}

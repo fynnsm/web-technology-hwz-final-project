@@ -5,14 +5,21 @@ type IconButtonProps = {
   label: string // Text für Screenreader (aria-label)
   children: ReactNode // das Icon (svg)
   className?: string // zusätzliche Klasse, z. B. "kick"
+  onClick?: () => void
 }
 
-export function IconButton({ label, children, className }: IconButtonProps) {
+export function IconButton({
+  label,
+  children,
+  className,
+  onClick,
+}: IconButtonProps) {
   return (
     <button
       className={className ? `icon-btn ${className}` : 'icon-btn'}
       type="button"
       aria-label={label}
+      onClick={onClick}
     >
       {children}
     </button>
