@@ -170,3 +170,16 @@ const updateOne = (event: ChangeEvent<HTMLInputElement>) => {
 - Prop-Namen immer klein und in camelCase: `onNumberChange`, nicht `OnNumberchange`.
 
 ## Block 5 Express-API
+
+Bruno to make API calls or test them
+Backend is getting provided from Tobi Abi.
+
+-> Wireframe of App which buttons call which backend function
+
+## Block 6
+
+Session Handling im Code
+
+onChange und onClick im DOM um Mutations zu triggern und dann etwas zu schreiben oder so yk.
+
+PollMs -> auf änderungen reagieren sobald User etwas sendet statt einen PageRefresh, noch besser mit refetch nach einem send eines users.
